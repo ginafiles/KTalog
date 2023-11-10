@@ -52,5 +52,16 @@
         <action
             android:id="@+id/action_genreFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_genreFragment_to_dramaFragment"
+            app:destination="@id/dramaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dramaFragment"
+        android:name="com.ginamelinia.ktalog.DramaFragment"
+        android:label="DramaFragment" >
+        <action
+            android:id="@+id/action_dramaFragment_to_genreFragment"
+            app:destination="@id/genreFragment" />
     </fragment>
 </navigation>

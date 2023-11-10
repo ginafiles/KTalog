@@ -1,9 +1,10 @@
 package com.ginamelinia.ktalog
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import com.google.gson.annotations.SerializedName
 
-@Parcelize
 data class Genre (
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("name")
     val genreTitle: String,
-): Parcelable
+)
