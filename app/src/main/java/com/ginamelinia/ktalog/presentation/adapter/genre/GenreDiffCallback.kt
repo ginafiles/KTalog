@@ -1,6 +1,7 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.presentation.adapter.genre
 
 import androidx.recyclerview.widget.DiffUtil
+import com.ginamelinia.ktalog.data.model.Genre
 
 class GenreDiffCallback : DiffUtil.ItemCallback<Genre>(){
     override fun areItemsTheSame(oldItem: Genre, newItem: Genre): Boolean {

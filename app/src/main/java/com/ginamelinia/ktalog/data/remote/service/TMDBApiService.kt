@@ -1,5 +1,7 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.data.remote.service
 
+import com.ginamelinia.ktalog.data.remote.response.DramaResponse
+import com.ginamelinia.ktalog.data.remote.response.GenreResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

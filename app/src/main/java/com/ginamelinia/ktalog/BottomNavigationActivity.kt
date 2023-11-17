@@ -31,7 +31,9 @@ class BottomNavigationActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.genreFragment) {
                 binding.bottomNavigation.visibility = View.GONE
-            } else {
+            } else if (destination.id == R.id.dramaDetailFragment) {
+                binding.bottomNavigation.visibility = View.GONE
+            }else {
                 binding.bottomNavigation.visibility = View.VISIBLE
             }
         }

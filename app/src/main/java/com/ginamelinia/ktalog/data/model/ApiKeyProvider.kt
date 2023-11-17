@@ -1,6 +1,7 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.data.model
 
 import android.content.Context
+import com.ginamelinia.ktalog.R
 
 object ApiKeyProvider {
     fun getTmdbApiKey(context: Context): String {

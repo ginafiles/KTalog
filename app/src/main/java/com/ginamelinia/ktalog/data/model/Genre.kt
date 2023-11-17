@@ -1,4 +1,4 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.data.model
 
 import com.google.gson.annotations.SerializedName
 

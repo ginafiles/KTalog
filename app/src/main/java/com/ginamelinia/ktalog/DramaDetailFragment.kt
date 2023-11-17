@@ -1,16 +1,21 @@
 package com.ginamelinia.ktalog
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
+import com.ginamelinia.ktalog.data.model.Drama
 import com.ginamelinia.ktalog.databinding.FragmentDramaDetailBinding
+//import com.ginamelinia.ktalog.presentation.home.HomeViewModel
 
 class DramaDetailFragment : Fragment() {
     private lateinit var binding: FragmentDramaDetailBinding
+    private val homeViewModel: HomeViewModel by viewModels()
 
-//    private val args: DramaDetailFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -21,13 +26,17 @@ class DramaDetailFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        val selectedDrama = args.selectedDrama
+        val selectedDrama = arguments?.get("selectedDrama") as? Drama
 
-//        binding.tvKdramaName.text = selectedDrama.name
-//        binding.tvKdramaOverview.text = selectedDrama.overview
-//
-//        Glide.with(binding.imageViewKdramaDetail)
-//            .load("https://image.tmdb.org/t/p/w500" + selectedDrama.posterPath)
-//            .into(binding.imageViewKdramaDetail)
+        if (selectedDrama != null) {
+            binding.tvKdramaName.text = selectedDrama.name
+            binding.tvKdramaOverview.text = selectedDrama.overview
+
+            Glide.with(binding.imageViewKdramaDetail)
+                .load("https://image.tmdb.org/t/p/w500" + selectedDrama.posterPath)
+                .into(binding.imageViewKdramaDetail)
+        } else {
+            Log.e("DramaDetailFragment", "Argumen selectedDrama null")
+        }
     }
 }

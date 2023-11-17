@@ -1,8 +1,9 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.presentation.adapter.genre
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import com.ginamelinia.ktalog.data.model.Genre
 import com.ginamelinia.ktalog.databinding.ItemGenreBinding
 
 class GenreAdapter() : ListAdapter<Genre, GenreViewHolder>(

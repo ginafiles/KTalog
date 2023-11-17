@@ -1,4 +1,4 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.presentation.drama
 
 import android.os.Bundle
 import android.view.LayoutInflater

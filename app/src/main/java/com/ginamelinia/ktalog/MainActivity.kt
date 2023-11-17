@@ -2,6 +2,7 @@ package com.ginamelinia.ktalog
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.ginamelinia.ktalog.presentation.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

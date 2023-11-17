@@ -1,6 +1,7 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.presentation.adapter.drama
 
 import androidx.recyclerview.widget.DiffUtil
+import com.ginamelinia.ktalog.data.model.Drama
 
 class DramaDiffCallback : DiffUtil.ItemCallback<Drama>() {
     override fun areItemsTheSame(oldItem: Drama, newItem: Drama): Boolean {

@@ -1,11 +1,13 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.presentation.adapter.drama
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.ginamelinia.ktalog.data.model.Drama
 import com.ginamelinia.ktalog.databinding.ItemDramaBinding
 
 class DramaViewHolder(
     private val binding: ItemDramaBinding,
+    private val onItemClick: ((Drama) -> Unit)?
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(drama: Drama) {
         binding.tvKdramaName.text = drama.name
@@ -16,6 +18,7 @@ class DramaViewHolder(
             .into(binding.imageViewKdrama)
 
         binding.root.setOnClickListener {
+            onItemClick?.invoke(drama)
         }
     }
 }

@@ -1,6 +1,7 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.presentation.adapter.genre
 
 import androidx.recyclerview.widget.RecyclerView
+import com.ginamelinia.ktalog.data.model.Genre
 import com.ginamelinia.ktalog.databinding.ItemGenreBinding
 
 class GenreViewHolder(

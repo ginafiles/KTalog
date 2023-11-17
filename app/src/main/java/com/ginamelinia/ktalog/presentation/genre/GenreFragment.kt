@@ -1,4 +1,4 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.presentation.genre
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ginamelinia.ktalog.R
 import com.ginamelinia.ktalog.databinding.FragmentGenreBinding
+import com.ginamelinia.ktalog.presentation.adapter.genre.GenreAdapter
 
 class GenreFragment : Fragment() {
     private lateinit var binding: FragmentGenreBinding

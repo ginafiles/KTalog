@@ -1,4 +1,4 @@
-package com.ginamelinia.ktalog
+package com.ginamelinia.ktalog.presentation.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ginamelinia.ktalog.HomeViewModel
+import com.ginamelinia.ktalog.data.model.RetrofitClient
+import com.ginamelinia.ktalog.data.remote.RemoteRepository
+import com.ginamelinia.ktalog.data.remote.service.TMDBApiService
 import com.ginamelinia.ktalog.databinding.FragmentHomeBinding
+import com.ginamelinia.ktalog.di.ViewModelFactory
+import com.ginamelinia.ktalog.presentation.adapter.drama.DramaAdapter
+import com.ginamelinia.ktalog.presentation.adapter.genre.GenreAdapter
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -35,7 +42,13 @@ class HomeFragment : Fragment() {
         genreRecyclerView = binding.genreRecyclerView
         dramaRecyclerView = binding.kdramaRecyclerView
 
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+        val retrofit = RetrofitClient.create(requireContext())
+        val apiService = retrofit.create(TMDBApiService::class.java)
+        val repository = RemoteRepository(apiService) // atau implementasi ITMDBRepository lainnya
+        val viewModelFactory = ViewModelFactory(repository)
+
+        homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+
         homeViewModel.genreList.observe(viewLifecycleOwner, Observer { genreList ->
             genreList?.let {
                 val firstFourGenres = genreList.take(4)
@@ -50,7 +63,10 @@ class HomeFragment : Fragment() {
 
         homeViewModel.dramaList.observe(viewLifecycleOwner, Observer { dramaList ->
             dramaList?.let {
-                dramaAdapter = DramaAdapter()
+                dramaAdapter = DramaAdapter{ item ->
+                    val action = HomeFragmentDirections.actionHomeFragmentToDramaDetailFragment(item)
+                    findNavController().navigate(action)
+                }
                 dramaAdapter.submitList(dramaList)
                 dramaRecyclerView.adapter = dramaAdapter
 
@@ -59,9 +75,8 @@ class HomeFragment : Fragment() {
             }
         })
 
-        homeViewModel.loadGenres(requireContext())
-        homeViewModel.loadDramas(requireContext())
-
+        homeViewModel.loadGenres()
+        homeViewModel.loadDramas()
 
         binding.btnSeeAll.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToGenreFragment()
@@ -69,3 +84,4 @@ class HomeFragment : Fragment() {
         }
     }
 }
+
