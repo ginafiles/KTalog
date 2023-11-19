@@ -40,5 +40,18 @@ class HomeViewModel(private val repository: HomeRepository) : ViewModel() {
             }
         }
     }
+
+    fun loadDramasByGenre(genreId: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val dramas = repository.getTvShowsByGenre(genreId)
+                withContext(Dispatchers.Main) {
+                    _dramaList.value = dramas!!
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 }
 

@@ -29,15 +29,16 @@ class BottomNavigationActivity : AppCompatActivity() {
 
     private fun setupNavigationListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.genreFragment) {
-                binding.bottomNavigation.visibility = View.GONE
-            } else if (destination.id == R.id.dramaDetailFragment) {
-                binding.bottomNavigation.visibility = View.GONE
-            }else {
-                binding.bottomNavigation.visibility = View.VISIBLE
+            binding.bottomNavigation.visibility = when (destination.id) {
+                R.id.genreFragment,
+                R.id.dramaDetailFragment,
+                R.id.dramaFragment,
+                -> View.GONE
+                else -> View.VISIBLE
             }
         }
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()

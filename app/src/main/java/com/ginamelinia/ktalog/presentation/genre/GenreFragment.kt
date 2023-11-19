@@ -10,15 +10,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ginamelinia.ktalog.HomeViewModel
 import com.ginamelinia.ktalog.R
+import com.ginamelinia.ktalog.data.model.RetrofitClient
+import com.ginamelinia.ktalog.data.remote.RemoteRepository
+import com.ginamelinia.ktalog.data.remote.service.TMDBApiService
 import com.ginamelinia.ktalog.databinding.FragmentGenreBinding
+import com.ginamelinia.ktalog.di.ViewModelFactory
 import com.ginamelinia.ktalog.presentation.adapter.genre.GenreAdapter
 
 class GenreFragment : Fragment() {
     private lateinit var binding: FragmentGenreBinding
     private lateinit var genreAdapter: GenreAdapter
     private lateinit var genreRecyclerView: RecyclerView
-    private lateinit var genreViewModel: GenreViewModel // Buat GenreViewModel
+    private lateinit var viewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,12 +39,22 @@ class GenreFragment : Fragment() {
 
         genreRecyclerView = binding.genreRecyclerView
 
-        genreViewModel = ViewModelProvider(this).get(GenreViewModel::class.java)
-        genreViewModel.genreList.observe(viewLifecycleOwner, Observer { genreList ->
+        val retrofit = RetrofitClient.create(requireContext())
+        val apiService = retrofit.create(TMDBApiService::class.java)
+        val repository = RemoteRepository(apiService)
+        val viewModelFactory = ViewModelFactory(
+            homeRepository = repository
+        )
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+        viewModel.genreList.observe(viewLifecycleOwner, Observer { genreList ->
             genreList?.let {
-                val genres = genreList
-                genreAdapter = GenreAdapter()
-                genreAdapter.submitList(genres)
+
+                genreAdapter = GenreAdapter { genre ->
+                    val action = GenreFragmentDirections.actionGenreFragmentToDramaFragment(genre)
+                    findNavController().navigate(action)
+                }
+                genreAdapter.submitList(genreList)
                 genreRecyclerView.adapter = genreAdapter
 
                 val genreLayoutManager = GridLayoutManager(requireContext(), 2)
@@ -47,7 +62,7 @@ class GenreFragment : Fragment() {
             }
         })
 
-        genreViewModel.loadGenres(requireContext())
+        viewModel.loadGenres()
 
         binding.backButton.setOnClickListener {
             findNavController().navigate(R.id.action_genreFragment_to_homeFragment)

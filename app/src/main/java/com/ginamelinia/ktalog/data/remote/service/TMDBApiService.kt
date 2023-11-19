@@ -13,6 +13,11 @@ interface TMDBApiService {
     @GET("discover/tv")
     suspend fun getTvShows(
         @Query("with_origin_country") country: String,
-//        @Query("with_genres") genreId: Int
+    ): Response<DramaResponse>
+
+    @GET("discover/tv")
+    suspend fun getTvShowsByGenre(
+        @Query("with_genres") genreId: Int,
+        @Query("with_origin_country") country: String,
     ): Response<DramaResponse>
 }

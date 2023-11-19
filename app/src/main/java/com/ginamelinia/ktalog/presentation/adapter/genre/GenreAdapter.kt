@@ -6,13 +6,16 @@ import androidx.recyclerview.widget.ListAdapter
 import com.ginamelinia.ktalog.data.model.Genre
 import com.ginamelinia.ktalog.databinding.ItemGenreBinding
 
-class GenreAdapter() : ListAdapter<Genre, GenreViewHolder>(
+class GenreAdapter(
+    private val onItemClick: ((Genre) -> Unit)?
+) : ListAdapter<Genre, GenreViewHolder>(
     GenreDiffCallback()
 ){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
         val binding = ItemGenreBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return GenreViewHolder(
-            binding = binding
+            binding = binding,
+            onItemClick = onItemClick
         )
     }
 

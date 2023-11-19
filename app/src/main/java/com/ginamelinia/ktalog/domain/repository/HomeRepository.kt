@@ -6,4 +6,5 @@ import com.ginamelinia.ktalog.data.model.Genre
 interface HomeRepository {
     suspend fun getTvGenres(): List<Genre>?
     suspend fun getTvShows(country: String): List<Drama>?
+    suspend fun getTvShowsByGenre(genreId: Int): List<Drama>?
 }

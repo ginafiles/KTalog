@@ -22,10 +22,16 @@ import com.ginamelinia.ktalog.presentation.adapter.genre.GenreAdapter
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+
+    // recycler view
     private lateinit var genreRecyclerView: RecyclerView
     private lateinit var dramaRecyclerView: RecyclerView
+
+    // adapter
     private lateinit var genreAdapter: GenreAdapter
     private lateinit var dramaAdapter: DramaAdapter
+
+    // view model
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
@@ -44,15 +50,20 @@ class HomeFragment : Fragment() {
 
         val retrofit = RetrofitClient.create(requireContext())
         val apiService = retrofit.create(TMDBApiService::class.java)
-        val repository = RemoteRepository(apiService) // atau implementasi ITMDBRepository lainnya
-        val viewModelFactory = ViewModelFactory(repository)
+        val repository = RemoteRepository(apiService)
+        val viewModelFactory = ViewModelFactory(
+            homeRepository = repository
+        )
 
         homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
 
         homeViewModel.genreList.observe(viewLifecycleOwner, Observer { genreList ->
             genreList?.let {
                 val firstFourGenres = genreList.take(4)
-                genreAdapter = GenreAdapter()
+                genreAdapter = GenreAdapter { genre ->
+                    val action = HomeFragmentDirections.actionHomeFragmentToDramaFragment(genre)
+                    findNavController().navigate(action)
+                }
                 genreAdapter.submitList(firstFourGenres)
                 genreRecyclerView.adapter = genreAdapter
 
